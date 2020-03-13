@@ -72,7 +72,7 @@
 	//Timepicker
 	if($(".time_picker").length > 0){
 		$('.time_picker').timepicker({
-		  timeFormat: 'h:mm: TT',
+		  timeFormat: 'h:mm tt',
 		  ampm: true,
 		  stepHour: 1,
 		  stepMinute: 5,
@@ -110,7 +110,7 @@
 		$(".team_carousel").owlCarousel({
 			mode:"fade",
 			items:4,
-			loop:true,
+			loop:false,
 			margin:15,
 			autoplay:false,
 			autoplayTimeout:3000,

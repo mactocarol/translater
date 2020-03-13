@@ -5,7 +5,7 @@
 				<h2>About Us</h2>
 				<div class="breadcrumbs">
 					<ul>
-						<li><a href="#">Home</a></li>
+						<li><a href="<?php echo base_url();?>">Home</a></li>
 						<li>About</li>
 					</ul>
 				</div>

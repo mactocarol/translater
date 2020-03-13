@@ -512,7 +512,7 @@ $(document).ready(function () {
            $('#notify').text(obj.length);
           }
        }); 
-    }, 10000);   
+    }, 6000);   
 });
    
    

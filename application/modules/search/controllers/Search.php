@@ -152,37 +152,112 @@ class Search extends MY_Controller {
 		$udata1 = array("vendor_id"=>$id);	
 		$data->ratingreview=$this->Search_model->SelectRecord('rating','*',$udata1,$orderby=array());
 		
-		$data->userlang = $this->Search_model->joindataResult('v.language_id','l.id',$udata1,'l.*,v.*','vendor_lang as v','language as l',$orderby=Null);
+		//$data->userlang = $this->Search_model->joindataResult('v.language_id','l.id',$udata1,'l.*,v.*','vendor_lang as v','language as l',$orderby=Null);
 		
-        $data->usercity = $this->Search_model->joindataResult('v.city_id','l.id',$udata1,'l.*,v.*','vendor_city as v','city as l',$orderby=Null);	
+		$data->userRating=$this->Search_model->SelectRecord('rating','*',$udata1,$orderby=array());
+		$data->usercity = $this->Search_model->joindataResult('v.city_id','l.id',$udata1,'l.*,v.*','vendor_city as v','city as l',$orderby=Null);	
 		
-		$unavalibaleDate=$this->Search_model->SelectRecord('user_avability','*',$udata1,$orderby=array());
+		$data->allOccuption=$this->Search_model->SelectRecord('occupation','*',array('status'=> '1'),$orderby=array());
+		$data->userOccup = $this->Search_model->joindataResult('v.occupation_id','l.id',$udata1,'l.*,v.*','vendor_occup as v','occupation as l',$orderby=Null);
+			
+		/* $unavalibaleDate=$this->Search_model->SelectRecord('user_avability','*',$udata1,$orderby=array());
 		
 			$merge_date = [];
 			foreach($unavalibaleDate as $date){
 				$merge_date[] = '"'.$date['date'].'"'.',';
 			}
 		$unavalibaleDates1 = implode("",$merge_date);
-		$data->unavalibaleDates = rtrim($unavalibaleDates1, ',');
+		$data->unavalibaleDates = rtrim($unavalibaleDates1, ','); */
 		
         $this->load->view('header');
 		$this->load->view('translator_detail',$data);
 		$this->load->view('footer');
 	}
 	// translator deatil page  //
+	 public function calendar_views()
+	{   
+		$data=new stdClass();
+		$occu_id = $this->uri->segment(5);
+		$ven_id = $this->uri->segment(3);
+		
+		$this->session->set_userdata('occu_id',$occu_id);
+		$this->session->set_userdata('ven_id',$ven_id);
+		$data->detailvendor =$this->Search_model->translator_detail($ven_id);
+		
+		$vendor_id = $this->session->userdata('user_id');
+		
+		//print_r($userAvalibty['date']); die;
+		$udata1 = array("vendor_id"=>$ven_id);	
+        $data->usercity = $this->Search_model->joindataResult('v.city_id','l.id',$udata1,'l.*,v.*','vendor_city as v','city as l',$orderby=Null);
+		$this->load->view('header');  
+		$this->load->view('view_allcalendar',$data);
+		$this->load->view('footer');  
+	}
 	
+	
+	
+		
+		 public function get_events()
+		 {
+			 
+			  $occu_id = $this->session->userdata('occu_id');
+			   $year = date("Y");
+			  $start = $year.'-01-01 00:00:00';
+			   $end = $year.'-12-31 00:00:00'; 
+			  $vendor_id = $this->session->userdata('ven_id');
+			 /*  $startdt = time() // setup a local datetime  
+			 $startdt->setTimestamp($start);  // Set the date based on timestamp
+			 echo $start_format = $startdt->format('Y-m-d H:i:s');   die;
+			 
+            $enddt = new DateTime('now'); // setup a local datetime
+			$enddt->setTimestamp($end); // Set the date based on timestamp
+			echo $end_format = $enddt->format('Y-m-d H:i:s'); */
+             
+			 $events= $this->Search_model->get_events($start,$end,$occu_id,$vendor_id);
+			 $eventsb= $this->Search_model->get_eventsb($start,$end,$occu_id,$vendor_id);
+             $data_events = array();
+            
+			 foreach($events->result() as $r) {
+
+				 $data_events[] = array(
+					 "id" => $r->id,
+					 "title" => $r->start_time."-".$r->end_time,
+					 "end" => $r->end,
+					 "start" => $r->start
+				 );
+				  
+			}
+			 foreach($eventsb->result() as $r) {
+
+				 $data_events[] = array(
+					 "id" => $r->id,
+					 "title" => $r->start_time."-".$r->end_time,
+					 "end" => $r->end,
+					 "start" => $r->start
+				 );
+				  
+			}
+			
+			 echo json_encode(array("events" => $data_events));
+			 exit();
+		 }
+			
+			
 	// booking  detail page  //		  
 	public function booking()
 	{	    	
 		$data=new stdClass();
 		
 		$data->booking_date = $this->input->post('booking_date');
-        $data->booking_time = $this->input->post('booking_time');
+        $data->start_time = $this->input->post('start_time');
+        $data->end_time = $this->input->post('end_time');
         $data->booking_hour = $this->input->post('booking_hour').' Hour';
-		$data->booking_lang = $this->input->post('booking_lang');
+		$data->occupation = $this->input->post('occupation');
 		$data->booking_city = $this->input->post('booking_city');
-		$data->booking_price = $this->input->post('booking_price');
+		$data->booking_price1 = $this->input->post('booking_price');
 		$data->vendor_id = $this->input->post('vendor_id');
+		$data->booking_price = $data->booking_price1*$this->input->post('booking_hour');
+		
 		$data->booked="";
 		
         if($this->session->flashdata('item')) {
@@ -226,18 +301,21 @@ class Search extends MY_Controller {
             }
 
 	    $booking_date = $this->input->post('booking_date');
-        $booking_time = $this->input->post('booking_time');
+        $start_time = $this->input->post('start_time');
+        $end_time = $this->input->post('end_time');
         $booking_hour = $this->input->post('booking_hour');
-		$booking_lang = $this->input->post('booking_lang');
+		$occupation = $this->input->post('occupation');
 		$booking_city = $this->input->post('booking_city');
 		$booking_price = $this->input->post('booking_price');
 		$vendor_id = $this->input->post('vendor_id');
+		$ocup_id = $this->input->post('ocup_id');
 		$user_id = $this->session->userdata('user_id');		
 		
-		if($booking_date!="" &&  $booking_time!=""){
-		$booking = $this->Search_model->InsertRecord('booking',array('vendor_id'=>$vendor_id,'user_id'=>$user_id,'date'=>$booking_date,'time'=> $booking_time,'hours'=>$booking_hour,'lang'=>$booking_lang,'city'=>$booking_city,'status'=>1));
+		if($booking_date!="" &&  $start_time!=""){
+			
+		$booking = $this->Search_model->InsertRecord('booking',array('vendor_id'=>$vendor_id,'user_id'=>$user_id,'occu_id'=>$ocup_id,'start'=>$booking_date,'end'=>$booking_date,'start_time'=> $start_time,'end_time'=> $end_time,'hours'=>$booking_hour,'occupation'=>$occupation,'city'=>$booking_city,'status'=>1));
 		
-		$this->Search_model->InsertRecord('user_avability',array('vendor_id'=>$vendor_id,'date'=>$booking_date,'status'=>1));
+		$this->Search_model->InsertRecord('user_avability',array('vendor_id'=>$vendor_id,'start'=>$booking_date,'end'=>$booking_date,'status'=>1));
 		
 		$this->Search_model->InsertRecord('notification',array('vendor_id'=>$vendor_id,'user_id'=>$user_id,'notification_type'=>"user_booking"));
 		
@@ -259,15 +337,13 @@ class Search extends MY_Controller {
 		
         $sub = "New Booking For Translator";         
 		$message = 'Hello '.$name.'<br>
-		'.$user_name.' Booked you for translation on date - '.$booking_date.' and time - '.$booking_time.' and hour - '.$booking_hour.'<br> Kind regards<br>
+		'.$user_name.' Booked you for translation on date - '.$booking_date.' and time - '.$start_time.' and hour - '.$booking_hour.'<br> Kind regards<br>
         The Translater Team';	
 		
         //$this->email($to,$sub,$message); 		
 		$data->error=0;
-                    $data->success=1;
-                    $data->message="Booking Successfully";
-		
-		
+		$data->success=1;
+		$data->message="Booking Successfully";
 		}
 	    
         $this->session->set_flashdata('item',$data);
@@ -277,6 +353,16 @@ class Search extends MY_Controller {
 	}
 	// booking vendor page  //
 	
-   
+    	// user view count //
+    public function viewcountservice()
+    {
+	$id=$this->input->post('id');	
+	$this->db->where('id',$id);
+	$this->db->set('view_count','view_count+1',FALSE);    
+    $this->db->update('tbl_user');
+	return ($this->db->affected_rows()>0)?TRUE:FALSE;
+    }
+	
+	// user view count //
 }  
 

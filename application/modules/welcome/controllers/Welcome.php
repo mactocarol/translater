@@ -24,9 +24,14 @@ class Welcome extends MY_Controller {
                 $data->message=$items->message;
             }                
         }            
-       
+       //$data->allVendor=$this->welcome_model->SelectRecord('user','*',array('user_type'=> '2','is_verified'=> '1'),$orderby=array());
+	   	$data->allVendor = $this->welcome_model->joindataResult('v.vendor_id','l.id',array('l.user_type'=> '2','l.is_verified'=> '1'),'l.*,v.*','vendor_details as v','user as l',$orderby=Null);
+        $data->allvenRating = $this->welcome_model->joindataResultAll('v.vendor_id','l.id',array('l.user_type'=> '2','l.is_verified'=> '1'),'l.*,v.*,AVG(v.rate) as avgRate','rating as v','user as l','v.vendor_id');
+        $data->alllanguage=$this->welcome_model->SelectRecord1('language','*',array('status'=> '1'));
+			 
+		//echo $this->db->last_query(); die;    
         $this->load->view('header');
-		$this->load->view('home');
+		$this->load->view('home',$data);
 		$this->load->view('footer');
 	}
 	
@@ -124,6 +129,24 @@ class Welcome extends MY_Controller {
 		$this->load->view('footer');
 	}
     // privacy_policy page  //
+	
+	
+	// user view count //
+   public function viewcountservice()
+    {
+	$id=$this->input->post('id');	
+	$this->db->where('id',$id);
+	$this->db->set('view_count','view_count+1',FALSE);    
+    $this->db->update('tbl_user');
+	return ($this->db->affected_rows()>0)?TRUE:FALSE;
+    }
+	
+	// user view count //
+	
+	// autocomplete//
+    
+
+ 	// autocomplete //
    
 }  
 

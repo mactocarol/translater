@@ -78,16 +78,16 @@ class User extends MY_Controller
 		  $this->form_validation->set_rules('password', 'Password', 'required');		
 		  //$this->form_validation->set_rules('C_pass', 'Confirm Password', 'required|min_length[5]|max_length[16]|matches[password]');
 		  $this->form_validation->set_rules('email', 'Email', 'required|min_length[6]|max_length[300]');
-          if ($this->form_validation->run() == FALSE)
+          /*if ($this->form_validation->run() == FALSE)
 		  {	
 		   $data->error=1;
            $data->success=0;
            $data->message='please enter valid email id unique , with all infomation';
            $this->session->set_flashdata('item',$data);
-		  // redirect('signup');
+		   redirect('signup');
 		  }
 		  else
-		  {	                                 
+		  {	  */                               
             if(!empty($_POST)){
 				
                 if ( $this->user_model->email_exists($this->input->post('email')) == TRUE ) 
@@ -124,7 +124,7 @@ class User extends MY_Controller
                                 $data->message='You are successfully registered, please login to your account.';
                                 $this->session->set_flashdata('item',$data);
                    
-		  } }                                                           
+		  }                                                           
            $data->title = "Register | ".$this->site_info()['site_title'];
 		   $this->load->view('header',$data);        
            $this->load->view('register_view',$data);   
@@ -265,7 +265,7 @@ class User extends MY_Controller
                         if($this->input->post('return_url')){ redirect(($this->input->post('return_url'))); }
 						
 						if($result->user_type==1){
-                        redirect('user/dashboard'); 
+                        redirect('search'); 
 						}
 						if($result->user_type==2){
 							//echo 'hi';
@@ -812,6 +812,21 @@ class User extends MY_Controller
         $this->db->update('order_detail',array('payment_status' => 'paid'));
 
     }
+		public function rating(){
+         $udata=array(                                            
+			'user_id'=>$this->session->userdata('user_id'),
+			'vendor_id'=>$this->input->post('vendor_id'),   
+			'rate'=>$this->input->post('rating'),   
+			'review'=>$this->input->post('review')
+		);
+			$this->user_model->InsertRecord('rating',$udata);
+			$this->user_model->InsertRecord('notification',array('vendor_id'=>$this->input->post('vendor_id'),'user_id'=>$this->session->userdata('user_id'),'notification_type'=>"user_rating"));
+		      $this->db->where(array('id' => $this->input->post('order_id')));
+              $this->db->update('booking',array('review_status' => 1)); //if 1 review given
+            redirect('user/history');                               
+	  }
+	  
+	
 
 }
 ?>

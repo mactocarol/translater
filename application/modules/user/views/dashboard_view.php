@@ -3,10 +3,10 @@
 	<div class="page_banner_section">
 		<div class="container">
 			<div class="page_banner_caption">
-				<h2>Translator dashboard</h2>
+				<h2>User dashboard</h2>
 				<div class="breadcrumbs">
 					<ul>
-						<li><a href="#">Home</a></li>
+						<li><a href="<?php echo base_url();?>">Home</a></li>
 						<li>Translator</li>
 					</ul>
 				</div>

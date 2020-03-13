@@ -5,7 +5,7 @@
 				<h2>Booking Detail</h2>				
 				<div class="breadcrumbs">
 					<ul>
-						<li><a href="#">Home</a></li>
+						<li><a href="<?php echo base_url();?>">Home</a></li>
 						<li>Booking</li>
 					</ul>
 				</div>
@@ -63,8 +63,8 @@
 								<div class="form_group">
 									<label>Booking Time*</label>
 									<div class="input_group">
-										<p><?php echo $booking_time; ?></p>
-										<input type="hidden" name="booking_time" value="<?php echo $booking_time; ?>">
+										<p><?php echo $start_time; ?></p>
+										<input type="hidden" name="booking_time" value="<?php echo $start_time; ?>">
 									</div>
 								</div>
 								<div class="form_group">
@@ -86,8 +86,8 @@
 								<div class="form_group">
 									<label>Booking Language*</label>
 									<div class="input_group">
-										<p><?php echo $booking_lang; ?></p>
-										<input type="hidden" name="booking_lang" value="<?php echo $booking_lang; ?>">
+										<p><?php echo $occupation; ?></p>
+										<input type="hidden" name="occupation" value="<?php echo $occupation; ?>">
 									</div>
 								</div>
 								<div class="form_group">

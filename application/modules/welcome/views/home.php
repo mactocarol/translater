@@ -1,4 +1,5 @@
-	<!-- Slider Section Start -->
+	
+	<?php //print_r($allvenRating); ?><!-- Slider Section Start -->
 	<div class="section home_slider_section">
 		<!-- Slider Start -->
 		<div class="home_slider owl-carousel owl-theme">
@@ -18,7 +19,7 @@
 				</div>
 			</div>
 			<div class="item">
-				// <div class="slide_item_bg" style="background-image: url(<?php echo base_url('front');?>/assets/images/slider/slide_1.png);">
+				<div class="slide_item_bg" style="background-image: url(<?php echo base_url('front');?>/assets/images/slider/slide_1.png);">
 					<!-- slider caption -->
 					<div class="slider_caption_wrap">
 						<div class="container">
@@ -73,61 +74,25 @@
 				<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
 			</div>
 			<div class="team_carousel owl-carousel owl-theme ">
+				<?php if(!empty($allVendor)){ 
+						foreach($allVendor as $key => $value) { ?>
 				<div class="item">
 					<div class="team_fegure">
 						<div class="team_img">
-							<img src="<?php echo base_url('front');?>/assets/images/team/team1.jpg">
+							<?php if($value['image']){?>
+							<img src="<?php echo base_url('upload');?>/vendor/<?php echo $value['image']; ?>" alt="">
+						<?php } else{?>
+							<img src="<?php echo base_url('front');?>/assets/images/translator/thumbs.jpg" alt="">
+						<?php } ?>
 						</div>
 						<div class="team_desc">
-							<h5>Christine M. Creekmore</h5>
-							<div class="team_rate">$100</div>
+							<h5><a href="<?php echo base_url(); ?>translator-detail/<?php echo preg_replace('/[^a-zA-Z0-9]/s', '-', $value['first_name']); ?>/<?php echo $value['vendor_id']; ?>" onclick="clickcount(<?php echo  $value['vendor_id']; ?>)"><?php echo $value['first_name']." ".$value['last_name']; ?></a></h5>
+							<div class="team_rate">$<?php echo $value['price']; ?></div>
 						</div>
 					</div>
 				</div>
-				<div class="item">
-					<div class="team_fegure">
-						<div class="team_img">
-							<img src="<?php echo base_url('front');?>/assets/images/team/team2.jpg">
-						</div>
-						<div class="team_desc">
-							<h5>Charles R. Bryant</h5>
-							<div class="team_rate">$100</div>
-						</div>
-					</div>
-				</div>
-				<div class="item">
-					<div class="team_fegure">
-						<div class="team_img">
-							<img src="<?php echo base_url('front');?>/assets/images/team/team3.jpg">
-						</div>
-						<div class="team_desc">
-							<h5>Brian D. Kennedy</h5>
-							<div class="team_rate">$100</div>
-						</div>
-					</div>
-				</div>
-				<div class="item">
-					<div class="team_fegure">
-						<div class="team_img">
-							<img src="<?php echo base_url('front');?>/assets/images/team/team4.jpg">
-						</div>
-						<div class="team_desc">
-							<h5>Monroe H. Rider</h5>
-							<div class="team_rate">$100</div>
-						</div>
-					</div>
-				</div>
-				<div class="item">
-					<div class="team_fegure">
-						<div class="team_img">
-							<img src="<?php echo base_url('front');?>/assets/images/team/team2.jpg">
-						</div>
-						<div class="team_desc">
-							<h5>Monroe H. Rider</h5>
-							<div class="team_rate">$100</div>
-						</div>
-					</div>
-				</div>
+			<?php } }?>
+				
 			</div>
 		</div>
 	</div>
@@ -224,10 +189,10 @@
 				<div class="col-md-6 col-12 language_border">
 					<div class="language_links">
 						<ul>
-							<li><a href="#">Chinese translation</a></li>
-							<li><a href="#">Japanese translation</a></li>
-							<li><a href="#">Portuguese translation</a></li>
-							<li><a href="#">Spanish translation</a></li>
+						 <?php if(!empty($alllanguage)){
+							     foreach ($alllanguage as $value) { ?>
+							<li><a href="#"><?php echo $value['title']; ?> translation</a></li>
+						 <?php } }?>
 						</ul>
 					</div>
 				</div>
@@ -254,72 +219,105 @@
 			</div>
 			<!-- rating row -->
 			<div class="row">
+			
 				<!-- column start -->
+				<?php if(!empty($allvenRating)){ 
+						foreach($allvenRating as $key=>$value) { ?>
+						
 				<div class="col-lg-4 col-md-6 col-12">
 					<div class="b_rating_box">
 						<div class="thumbs">
-							<img src="<?php echo base_url('front');?>/assets/images/rating/thumb_1.jpg" alt="" class="img-fluid">
+							<?php if($value['image']){?>
+							<img src="<?php echo base_url('upload');?>/vendor/<?php echo $value['image']; ?>" alt="">
+						<?php } else{?>
+							<img src="<?php echo base_url('front');?>/assets/images/translator/thumbs.jpg" alt="">
+						<?php } ?>
 						</div>
 						<div class="rating_desc">
-							<h5>Reebok Track Jacket</h5>
+							<h5><a href="<?php echo base_url(); ?>translator-detail/<?php echo preg_replace('/[^a-zA-Z0-9]/s', '-', $value['first_name']); ?>/<?php echo $value['vendor_id']; ?>" onclick="clickcount(<?php echo  $value['vendor_id']; ?>)"><?php echo $value['first_name']." ".$value['last_name']; ?></a></h5>
 							<div class="rating_strip">
+							<?php if($value['avgRate'] == 1){ ?>
 								<div class="ratings">
 									<i class="fas fa-star"></i>
+								    <i class="fas fa-star disable"></i>
+									<i class="fas fa-star disable"></i>
+									<i class="fas fa-star disable"></i>
+									<i class="fas fa-star disable"></i>
+								</div>
+							<?php } else if($value['avgRate'] == 1.5) {?>
+							<div class="ratings">
 									<i class="fas fa-star"></i>
+								    <i class="fas fa-star-half-alt"></i>
+									<i class="fas fa-star disable"></i>
+									<i class="fas fa-star disable"></i>
+									<i class="fas fa-star disable"></i>
+								</div>
+							<?php } else if($value['avgRate'] == 2) {?>
+							<div class="ratings">
+									<i class="fas fa-star"></i>
+								    <i class="fas fa-star"></i>
+									<i class="fas fa-star disable"></i>
+									<i class="fas fa-star disable"></i>
+									<i class="fas fa-star disable"></i>
+								</div>
+							<?php } else if($value['avgRate'] == 2.5) {?>
+							<div class="ratings">
+									<i class="fas fa-star"></i>
+								    <i class="fas fa-star"></i>
+									<i class="fas fa-star-half-alt"></i>
+									<i class="fas fa-star disable"></i>
+									<i class="fas fa-star disable"></i>
+								</div>
+							<?php } else if($value['avgRate'] == 3) {?>
+							<div class="ratings">
+									<i class="fas fa-star"></i>
+								    <i class="fas fa-star"></i>
+									<i class="fas fa-star"></i>
+									<i class="fas fa-star disable"></i>
+									<i class="fas fa-star disable"></i>
+								</div>
+							<?php } else if($value['avgRate'] == 3.5) {?>
+							<div class="ratings">
+									<i class="fas fa-star"></i>
+								    <i class="fas fa-star"></i>
+									<i class="fas fa-star"></i>
+									<i class="fas fa-star-half-alt"></i>
+									<i class="fas fa-star disable"></i>
+								</div>
+							
+							<?php } else if($value['avgRate'] == 4) {?>
+								<div class="ratings">
+									<i class="fas fa-star"></i>
+								    <i class="fas fa-star"></i>
 									<i class="fas fa-star"></i>
 									<i class="fas fa-star"></i>
 									<i class="fas fa-star disable"></i>
 								</div>
-								<div class="rating_txt">4.0</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- column end -->
-				<!-- column start -->
-				<div class="col-lg-4 col-md-6 col-12">
-					<div class="b_rating_box">
-						<div class="thumbs">
-							<img src="<?php echo base_url('front');?>/assets/images/rating/thumb_2.jpg" alt="" class="img-fluid">
-						</div>
-						<div class="rating_desc">
-							<h5>Reebok Track Jacket</h5>
-							<div class="rating_strip">
-								<div class="ratings">
+							<?php }  else if($value['avgRate'] == 4.5) {?>
+							<div class="ratings">
+									<i class="fas fa-star"></i>
+								    <i class="fas fa-star"></i>
 									<i class="fas fa-star"></i>
 									<i class="fas fa-star"></i>
-									<i class="fas fa-star"></i>
-									<i class="fas fa-star"></i>
-									<i class="fas fa-star disable"></i>
+									<i class="fas fa-star-half-alt"></i>
 								</div>
-								<div class="rating_txt">4.0</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- column end -->
-				<!-- column start -->
-				<div class="col-lg-4 col-md-6 col-12">
-					<div class="b_rating_box">
-						<div class="thumbs">
-							<img src="<?php echo base_url('front');?>/assets/images/rating/thumb_3.jpg" alt="" class="img-fluid">
-						</div>
-						<div class="rating_desc">
-							<h5>Reebok Track Jacket</h5>
-							<div class="rating_strip">
-								<div class="ratings">
+							<?php } else if($value['avgRate'] == 5) {?>
+							    <div class="ratings">
+									<i class="fas fa-star"></i>
+								    <i class="fas fa-star"></i>
 									<i class="fas fa-star"></i>
 									<i class="fas fa-star"></i>
 									<i class="fas fa-star"></i>
-									<i class="fas fa-star"></i>
-									<i class="fas fa-star disable"></i>
 								</div>
-								<div class="rating_txt">4.0</div>
+							<?php } ?>
+								<div class="rating_txt"><?php print_r($value['avgRate']); ?></div>
 							</div>
+							
 						</div>
 					</div>
 				</div>
 				<!-- column end -->
+					<?php } }?>
 			</div>
 			<!-- rating row -->
 		</div>
@@ -354,3 +352,16 @@
 		</div>
 	</div>
    <!-- Newsletter Section End -->
+<script>
+  function clickcount(id)
+	{		
+		jQuery.ajax({
+			url: '<?php echo base_url();?>welcome/Welcome/viewcountservice',
+			type: 'post',
+			data: {id:id},
+			success: function (result)
+			{					
+			}
+		});
+   } 
+</script>

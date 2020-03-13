@@ -5,7 +5,7 @@
 				<h2>Search Translator</h2>
 				<div class="breadcrumbs">
 					<ul>
-						<li><a href="#">Home</a></li>
+						<li><a href="<?php echo base_url();?>">Home</a></li>
 						<li>Translator</li>
 					</ul>
 				</div>
@@ -36,7 +36,7 @@
 								</div>
 							</div>
 							<!-- search widget End -->
-							<!-- Language widget start -->
+							<!-- Language widget start 
 							<div class="tran_widgets">
 								<h5 class="titles">Select Language</h5>
 								<div class="widget_body">
@@ -53,7 +53,7 @@
 										</select>
 									</div>
 								</div>
-							</div>
+							</div>-->
 							<!-- Language widget End -->
 							<!-- city widget start -->
 							<div class="tran_widgets">
@@ -155,7 +155,7 @@
 										<?php  } ?>
 									</div>
 									<div class="fig_captions">
-										<h5><a href="<?php echo base_url(); ?>translator-detail/<?php echo preg_replace('/[^a-zA-Z0-9]/s', '-', $list['first_name']); ?>/<?php echo $list['id']; ?>"><?php echo $list['first_name']; ?></a></h5>
+										<h5><a href="<?php echo base_url(); ?>translator-detail/<?php echo preg_replace('/[^a-zA-Z0-9]/s', '-', $list['first_name']); ?>/<?php echo $list['id']; ?>" onclick="clickcount(<?php echo  $list['id']; ?>)"><?php echo $list['first_name']; ?></a></h5>
 										<div class="lang_div">Language - <?php  $lg =array(); foreach(get_lang($list['id']) as $lng){  $lg[]= $lng->title; } echo $lg = implode(", ",$lg); ?></div>
 										<div class="city_div">City - <?php  $ct =array(); foreach(get_city($list['id']) as $cty){  $ct[]= $cty->title; } echo $cty = implode(", ",$ct); ?></div>
 										
@@ -249,4 +249,16 @@ function filter_data(url)
 	
  }
  filter_data('<?php echo base_url(); ?>search/Search/vendorlist/0');
+ 
+function clickcount(id)
+		{			
+			jQuery.ajax({
+				url: '<?php echo base_url();?>search/Search/viewcountservice',
+				type: 'post',
+				data: {id:id},
+			    success: function (result)
+				{					
+				}
+			});
+      } 
 </script>

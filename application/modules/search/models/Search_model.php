@@ -281,5 +281,22 @@ class Search_model extends MY_Model
 	return $result = $query->row();	
     //echo $this->db->last_query(); die;
 	}
-        
+	function get_events($start, $end, $occu_id, $vendor_id)
+	{
+		 $this->db->where("start >=", $start);
+		$this->db->where("end <=", $end);
+		$this->db->where("occupation_id", $occu_id);
+		$this->db->where("vendor_id", $vendor_id);
+		
+		return $this->db->get("user_avability");
+	}
+    function get_eventsb($start, $end, $occu_id, $vendor_id)
+	{
+		 $this->db->where("start >=", $start);
+		$this->db->where("end <=", $end);
+		$this->db->where("occu_id", $occu_id);
+		$this->db->where("vendor_id", $vendor_id);
+		
+		return $this->db->get("booking");
+	}    
 }

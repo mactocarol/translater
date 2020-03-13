@@ -68,6 +68,7 @@ class MY_Model extends CI_Model
 		return $query->result_array();
 	}
 
+
      
 	function SelectRecordpaginatoin($TableName,$Selectdata,$WhereData,$orderby,$limit,$start){
 		$this->db->limit($limit,$start);
@@ -107,6 +108,7 @@ class MY_Model extends CI_Model
 		$query = $this->db->get();
 		return $query->result_array();
 	}
+   
     
 	function joinApidata($place1,$place2,$WhereData,$Selectdata,$TableName1,$TableName2,$orderby){
 		$this->db->select($Selectdata);

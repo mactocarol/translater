@@ -5,6 +5,7 @@
 		$dates = date("Y/m/d");
 	}
 ?>
+
  <link rel="stylesheet" href="<?php echo base_url('front');?>/assets/css/croppie.css">
 	<!-- page banner start -->
 	<div class="page_banner_section">
@@ -13,7 +14,7 @@
 				<h2>Translator dashboard</h2>
 				<div class="breadcrumbs">
 					<ul>
-						<li><a href="#">Home</a></li>
+						<li><a href="<?php echo base_url();?>">Home</a></li>
 						<li>Translator</li>
 					</ul>
 				</div>
@@ -71,22 +72,89 @@
 									<div class="lft">
 										<h5><?php if(!empty($userDatas)){ echo $userDatas->first_name." ".$userDatas->last_name; } ?></h5>
 										<div class="rating_wraps">
-											<div class="rating_dv">
-												<i class="fas fa-star"></i>
-												<i class="fas fa-star"></i>
-												<i class="fas fa-star"></i>
-												<i class="fas fa-star"></i>
-												<i class="fas fa-star disable_str"></i>
-											</div>
+											<?php if($allvenRating['avgRate'] == 1){ ?>
+													<div class="rating_dv">
+														<i class="fas fa-star"></i>
+														<i class="fas fa-star disable_str"></i>
+														<i class="fas fa-star disable_str"></i>
+														<i class="fas fa-star disable_str"></i>
+														<i class="fas fa-star disable_str"></i>
+													</div>
+												<?php } else if($allvenRating['avgRate'] == 1.5) {?>
+												<div class="rating_dv">
+														<i class="fas fa-star"></i>
+														<i class="fas fa-star-half-alt"></i>
+														<i class="fas fa-star disable_str"></i>
+														<i class="fas fa-star disable_str"></i>
+														<i class="fas fa-star disable_str"></i>
+													</div>
+												<?php } else if($allvenRating['avgRate'] == 2) {?>
+												<div class="rating_dv">
+														<i class="fas fa-star"></i>
+														<i class="fas fa-star"></i>
+														<i class="fas fa-star disable_str"></i>
+														<i class="fas fa-star disable_str"></i>
+														<i class="fas fa-star disable_str"></i>
+													</div>
+												<?php } else if($allvenRating['avgRate'] == 2.5) {?>
+												<div class="rating_dv">
+														<i class="fas fa-star"></i>
+														<i class="fas fa-star"></i>
+														<i class="fas fa-star-half-alt"></i>
+														<i class="fas fa-star disable_str"></i>
+														<i class="fas fa-star disable_str"></i>
+													</div>
+												<?php } else if($allvenRating['avgRate'] == 3) {?>
+												<div class="rating_dv">
+														<i class="fas fa-star"></i>
+														<i class="fas fa-star"></i>
+														<i class="fas fa-star"></i>
+														<i class="fas fa-star disable_str"></i>
+														<i class="fas fa-star disable_str"></i>
+													</div>
+												<?php } else if($allvenRating['avgRate'] == 3.5) {?>
+												<div class="rating_dv">
+														<i class="fas fa-star"></i>
+														<i class="fas fa-star"></i>
+														<i class="fas fa-star"></i>
+														<i class="fas fa-star-half-alt"></i>
+														<i class="fas fa-star disable_str"></i>
+													</div>
+												
+												<?php } else if($allvenRating['avgRate'] == 4) {?>
+													<div class="rating_dv">
+														<i class="fas fa-star"></i>
+														<i class="fas fa-star"></i>
+														<i class="fas fa-star"></i>
+														<i class="fas fa-star"></i>
+														<i class="fas fa-star disable_str"></i>
+													</div>
+												<?php }  else if($allvenRating['avgRate'] == 4.5) {?>
+												<div class="rating_dv">
+														<i class="fas fa-star"></i>
+														<i class="fas fa-star"></i>
+														<i class="fas fa-star"></i>
+														<i class="fas fa-star"></i>
+														<i class="fas fa-star-half-alt"></i>
+													</div>
+												<?php } else if($allvenRating['avgRate'] == 5) {?>
+													<div class="rating_dv">
+														<i class="fas fa-star"></i>
+														<i class="fas fa-star"></i>
+														<i class="fas fa-star"></i>
+														<i class="fas fa-star"></i>
+														<i class="fas fa-star"></i>
+													</div>
+												<?php } ?>
 											<span class="review_txt">(<?php if(!empty($userDatas)){ echo $userDatas->view_count; }?> Views)</span>
 										</div>
 									</div>
 									<div class="right_dv">
 										<a href="#" class="edit_trans site_button" data-toggle="modal" data-target="#edit_profile_modal">Edit Profile</a> 
-										<!--<a href="#" class="hire_btn site_button">Hire now</a>-->
+										<a href="<?php echo base_url('vendor/calendar');?>" class="hire_btn site_button">Set & view calendar</a>
 									</div>
 								</div>
-								<div class="amount_trns">$ <?php if(!empty($userDetails)){ echo $userDetails->price; }?> <span>/hr</span></div>
+								<div class="amount_trns">$ <?php if(!empty($userDetails)){ echo $userDetails->price; }?><span>/hr</span></div>
 								<div class="table-responsive">
 								  <table class="table prof_detail_lst">
 									<tr>
@@ -101,12 +169,12 @@
 										<td class="frst_spn">Email</td>
 										<td class="scnd_spn"><?php if(!empty($userDatas)){ echo $userDatas->email; } ?></td>
 									</tr>
-									<tr>
-										<td class="frst_spn">Language</td>
-										<td class="scnd_spn"><?php   if(!empty($userlang)){ $lg =array();  
-										foreach($userlang as $vallang) {  $lg[] = $vallang['title']; 
-										 } echo  $lg = implode(", ",$lg); }?></td>
-									</tr>
+									<!--<tr>
+										<td class="frst_spn">Occupation</td>
+										<td class="scnd_spn"><?php //if(!empty($userOccup)){ $lg =array();  
+										//foreach($userOccup as $vallang) {  $lg[] = $vallang['title']; 
+										 // } echo  $lg = implode(", ",$lg);  }?></td>
+									</tr>-->
 									<tr>
 										<td class="frst_spn">City</td>
 										<td class="scnd_spn"><?php   if(!empty($usercity)){  $ct =array(); 
@@ -129,6 +197,37 @@
 									</tr>
 								  </table>
 								</div>
+								<!--occupation row --->
+								<div class="occupation_row">
+									<h4>Occupation</h4>
+									
+									<?php if(!empty($userOccup)){ $lg =array();  
+										foreach($userOccup as $vallang) {   
+										?>
+									<!-- panel start -->
+									<div class="ac_panel">
+										<div class="ac_heading">
+											<h5><?php  echo $vallang['title'];; ?></h5>
+											<span class="ac_icons"><i class="fas fa-plus"></i></span>
+										</div>
+										<div class="ac_content">
+											<div class="panel_body">
+												<h5>Experience</h5>
+												<p><?php  echo $vallang['experience']; ?> Year</p>
+												<h5>specialization</h5>
+												<p><?php  echo $vallang['specialization']; ?></p>
+												<h5>Booking Calendar</h5>
+												<p><div class="calendar_tabs_dv"><a class="tabs_link" href="<?php echo site_url();?>vendor/calendar_views/<?php echo $vallang['title'];  ?>/<?php echo $vallang['id'];  ?>"><?php echo $vallang['title']."   Calendar           ".'</br>';?></div></a>
+											    </p>
+											</div>
+										</div>
+									</div>
+									<?php } }?>
+									<!-- panel start -->
+									
+								</div>
+								<!--occupation row --->
+								<!--tabs start--->
 								<div class="profile_dtl_tabs">
 									<div>
 										<a href="#" class="site_button edit_dtl_btn" data-toggle="modal" data-target="#edit_detail_modal">
@@ -136,7 +235,7 @@
 									</div>
 									<ul class="tab_menu">
 										<li class="tab_link active" data-tab="personal_tab">
-											personal details
+											Personal details
 										</li>
 										<li class="tab_link" data-tab="business_tab">
 											Business details
@@ -164,6 +263,7 @@
 										</div>
 									</div>
 								</div>
+								<!--tabs End--->
 							</div>
 						</div>
 					</div>
@@ -171,22 +271,7 @@
 			</div>
 		</div>
 	</div>
-<!-- Booking calendar start -->
-	<div class="section booking_cal_section">
-		<div class="container">
-			<div class="booking_head_dv text-center">
-				<h5>Booking Calendar</h5>
-			</div>
-			<div class="booking_cal_bg vendor_booking_cal">
-				<div class="booking_calendar_dv">
-					<div class="booking_calendar" id="mainbodyc">
-						<div class="calendar_input" id="calInput"></div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Booking calendar End -->
+
 	<!-- Review section start -->
 	<div class="section review_rating_sec pad_top_bottom_40">
 		<div class="container">
@@ -198,26 +283,68 @@
 				<li>
 					<div class="review_user_list">
 						<div class="r_thumb">
-							<img src="<?php echo base_url('front');?>/assets/images/team/team1.jpg" alt="">
+						<?php if(get_user_image($value['user_id'])) {?>
+							<img src="<?php echo base_url('upload');?>/user/<?php print_r(get_user_image($value['user_id'])); ?>" alt="">
+						<?php } else{?>
+							<img src="<?php echo base_url('front');?>/assets/images/translator/thumbs.jpg" alt="">
+						<?php } ?>		
 						</div>
 						<div class="r_caption">
 							<div class="headng">
-								<h5>Marc Jhon</h5>
+								<h5><?php print_r(get_user_name($value['user_id'])); ?></h5>
 							</div>
+							<?php if($value['rate'] == 1){ ?>
 							<div class="rating_dv">
-							
+							    <i class="fas fa-star"></i>
+								<i class="fas fa-star disable_str"></i>
+								<i class="fas fa-star disable_str"></i>
+								<i class="fas fa-star disable_str"></i>
+								<i class="fas fa-star disable_str"></i>
+							</div>
+							<?php }else if($value['rate'] == 2){ ?>
+							<div class="rating_dv">
+							    <i class="fas fa-star"></i>
 								<i class="fas fa-star"></i>
+								<i class="fas fa-star disable_str"></i>
+								<i class="fas fa-star disable_str"></i>
+								<i class="fas fa-star disable_str"></i>
+							</div>
+							
+							<?php } else if($value['rate'] == 3){ ?>
+							<div class="rating_dv">
+							    <i class="fas fa-star"></i>
+								<i class="fas fa-star"></i>
+								<i class="fas fa-star"></i>
+								<i class="fas fa-star disable_str"></i>
+								<i class="fas fa-star disable_str"></i>
+							</div>
+						
+							<?php } else if($value['rate'] == 4){ ?>
+							<div class="rating_dv">
+							    <i class="fas fa-star"></i>
 								<i class="fas fa-star"></i>
 								<i class="fas fa-star"></i>
 								<i class="fas fa-star"></i>
 								<i class="fas fa-star disable_str"></i>
 							</div>
 							
+							<?php } else if($value['rate'] == 5){ ?>
+							<div class="rating_dv">
+							    <i class="fas fa-star"></i>
+								<i class="fas fa-star"></i>
+								<i class="fas fa-star"></i>
+								<i class="fas fa-star"></i>
+								<i class="fas fa-star"></i>
+							</div>
+							<?php } ?>
 							<p><?php echo $value['review']; ?></p>
 						</div>
 					</div>
 				</li>
-				<?php } }?>
+				<?php } }
+				else{?>
+					<span>No Reviews</span>
+				<?php }?>
 				<!-- review list end -->
 				
 			</ul>
@@ -242,7 +369,7 @@
 	      			<div class="row">
 	      				<div class="col-lg-6">
 							<div class="form_group">
-								<label>First Name</label>
+								<label>First Name *</label>
 								<div class="input_group">
 									<input type="hidden" name="uid" id="uid" value="<?php echo $this->session->userdata('user_id'); ?>">
 									<input type="text" required name="fname" id="fname" value="<?php if(!empty($userDatas)) { echo $userDatas->first_name; } ?>" placeholder="Enter Your Name">
@@ -251,7 +378,7 @@
 						</div>
 						<div class="col-lg-6">
 							<div class="form_group">
-								<label>Last Name</label>
+								<label>Last Name *</label>
 								<div class="input_group">
 									<input type="text" required name="lname" id="lname" value="<?php if(!empty($userDatas)) { echo $userDatas->last_name; }?>" placeholder="Enter Your Name">
 								</div>
@@ -268,7 +395,7 @@
 						</div>
 						<div class="col-lg-6">
 							<div class="form_group">
-								<label>Price</label>
+								<label>Price Per Hour *</label>
 								<div class="input_group">
 									<input type="text" required oninput="this.value=this.value.replace(/[^0-9]/g,'');" name="price" id="price" value="<?php if(!empty($userDetails)) { echo $userDetails->price; }?>"  placeholder="Price Per Hour">
 								</div>
@@ -276,36 +403,36 @@
 						</div>
 						<div class="col-lg-12">
 	      					<div class="form_group">
-								<label>Email</label>
+								<label>Email *</label>
 								<div class="input_group">
 									<input type="email"  name="email" value="<?php if(!empty($userDatas)){ echo $userDatas->email; }?>" placeholder="Enter Your Email" readonly>
 								</div>
 							</div>
 	      				</div>
-						<div class="col-md-6 col-12">
+						<!--<div class="col-md-6 col-12">
 							<div class="form_group">
 								<label>Language *</label>
 								<div class="input_group select_box">
 									<select class="selectpicker" multiple="" name="lang[]" id="lang">
 									<option value="" disabled>Select Language</option>
 									<?php  
-									 $industrys = '';
+									/*  $industrys = '';
 									 $fff = $userlangids; 
 
 									  if(!empty($fff)){											 
 										$industrys = explode(',',$fff);
 									  }
 									  if(!empty($alllanguage)){
-											 foreach ($alllanguage as $value) {
+											 foreach ($alllanguage as $value) { */
 										?>
-										<option value="<?php echo $value['id']; ?>" 
-			                           <?php echo (in_array($value['id'],$industrys)) ? 'selected' : ''; ?>><?php echo $value['title']; ?></option>
+										<option value="<?php// echo $value['id']; ?>" 
+			                           <?php //echo (in_array($value['id'],$industrys)) ? 'selected' : ''; ?>><?php //echo $value['title']; ?></option>
 			
-									  <?php } } ?>
+									  <?php //} } ?>
 									</select>
 								</div>
 							</div>
-						</div>
+						</div>-->
 						<div class="col-md-6 col-12">
 							<div class="form_group">
 								<label>City *</label>
@@ -491,6 +618,8 @@
 <script src="<?php echo base_url('front'); ?>/js/croppie.js"></script>
 <script src="<?php echo base_url('front');?>/assets/js/plugins/jquery_ui/jquery-ui.min.js"></script>
 
+    <!-- Common js-->
+	
 <script>
 $uploadCrop1 = $('#upload-demo1').croppie({
     enableExif: true,
@@ -585,4 +714,5 @@ $(document).on('change','#calInput', function(){
 		}
 	});
 });
-</script>				
+</script>
+	

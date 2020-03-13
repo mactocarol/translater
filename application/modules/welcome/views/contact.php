@@ -6,7 +6,7 @@
 				<p>Send us a message</p>
 				<div class="breadcrumbs">
 					<ul>
-						<li><a href="#">Home</a></li>
+						<li><a href="<?php echo base_url();?>">Home</a></li>
 						<li>Contact</li>
 					</ul>
 				</div>

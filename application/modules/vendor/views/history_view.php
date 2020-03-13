@@ -9,7 +9,7 @@
 				<h2>Translator history</h2>
 				<div class="breadcrumbs">
 					<ul>
-						<li><a href="#">Home</a></li>
+						<li><a href="<?php echo base_url();?>">Home</a></li>
 						<li>Translator</li>
 					</ul>
 				</div>
@@ -81,10 +81,10 @@
 										?>
 										  <tr>
 										    <td><?php print_r(get_user_name($data['user_id'])); ?></td>
-											<td><?php echo $data['date']; ?></td>
-											<td><?php echo $data['lang']; ?></td>
+											<td><?php echo $data['occupation']; ?></td>
 											<td><?php echo $data['city']; ?></td>
-											<td><?php echo $data['time']; ?></td>
+											<td><?php echo $data['start']; ?></td>
+											<td><?php echo $data['start_time']; ?></td>
 											<td><?php echo $data['hours']; ?></td>
 											<td><?php echo $data['created_at']; ?></td>
 										  </tr>

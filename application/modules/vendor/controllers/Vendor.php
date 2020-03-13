@@ -23,19 +23,13 @@ class Vendor extends MY_Controller
             $data->userDatas=$this->vendor_model->SelectSingleRecord('user','*',$udata,$orderby=array());
 			$data->userDetails=$this->vendor_model->SelectSingleRecord('vendor_details','*',$udata1,$orderby=array());
 			$data->userRating=$this->vendor_model->SelectRecord('rating','*',$udata1,$orderby=array());
-		    $unavalibaleDate=$this->vendor_model->SelectRecord('user_avability','*',$udata1,$orderby=array());
-			
-			$merge_date = [];
-			foreach($unavalibaleDate as $date){
-				$merge_date[] = '"'.$date['date'].'"'.',';
-			}	
-			
-            $unavalibaleDates1 = implode("",$merge_date);
-			$data->unavalibaleDates = rtrim($unavalibaleDates1, ',');
+		    
             //print_r($data->userlang); die;
 			
 			
-			$data->userlang = $this->vendor_model->joindataResult('v.language_id','l.id',$udata1,'l.*,v.*','vendor_lang as v','language as l',$orderby=Null);
+			//$data->userlang = $this->vendor_model->joindataResult('v.language_id','l.id',$udata1,'l.*,v.*','vendor_lang as v','language as l',$orderby=Null);
+			
+			$data->userOccup = $this->vendor_model->joindataResult('v.occupation_id','l.id',$udata1,'l.*,v.*','vendor_occup as v','occupation as l',$orderby=Null);
          // print_r($data->userlang); die;
 			$data->usercity = $this->vendor_model->joindataResult('v.city_id','l.id',$udata1,'l.*,v.*','vendor_city as v','city as l',$orderby=Null);
             $data->alllanguage=$this->vendor_model->SelectRecord1('language','*',array('status'=> '1'));
@@ -61,12 +55,16 @@ class Vendor extends MY_Controller
             $usercityid1 = implode("",$city);
 			$data->usercityids = rtrim($usercityid1, ',');
 			//print_r($data->userlangids); die;
-		   $data->notifylist = $this->vendor_model->joindataResult('v.vendor_id','u.id',array("vendor_id"=>$this->session->userdata('user_id'),'v.status'=>0),'u.*,v.*','notification as v','user as u',$orderby=Null);
-           
+		   $data->notifylist = $this->vendor_model->joindataResult('v.vendor_id','u.id',array("v.vendor_id"=>$this->session->userdata('user_id'),'v.status'=>0),'u.*,v.*','notification as v','user as u',$orderby=Null);
+           //echo $this->db->last_query(); die;
            //$data->userDatas=$this->vendor_model->SelectRecord('notification','*',$where,$orderby=array());
            //$result = $this->vendor_model->UpdateRecord('notification',array('status' => 1),$where);
            //$result = $this->vendor_model->notificationStatus();
-                
+		   $data->allvenRating = $this->vendor_model->joindataResultAll('v.vendor_id','l.id',array('l.id'=> $this->session->userdata('user_id')),'l.*,v.*,AVG(v.rate) as avgRate','rating as v','user as l','v.vendor_id');
+       //print_r($data->allvenRating); die;   
+		
+             $where=array('vendor_id'=> $this->session->userdata('user_id'),'notification_type'=>'user_rating');
+            $this->vendor_model->UpdateRecord('notification',array('status' => 1),$where);    
 		    $this->load->view('header',$data);  
             $this->load->view('dashboard_view',$data);
             $this->load->view('footer',$data);  
@@ -77,7 +75,125 @@ class Vendor extends MY_Controller
 			} 
 		}
 		
-		 
+		 public function calendar()
+        {  
+              if($this->session->userdata('logged_in')){
+                
+            
+           $data=new stdClass();
+		  
+            $udata = array("id"=>$this->session->userdata('user_id'));
+            $udata1 = array("vendor_id"=>$this->session->userdata('user_id'));			
+            $data->userDatas=$this->vendor_model->SelectSingleRecord('user','*',$udata,$orderby=array());
+			$data->userDetails=$this->vendor_model->SelectSingleRecord('vendor_details','*',$udata1,$orderby=array());
+			$data->userRating=$this->vendor_model->SelectRecord('rating','*',$udata1,$orderby=array());
+		    $unavalibaleDate=$this->vendor_model->SelectRecord('user_avability','*',$udata1,$orderby=array());
+			
+			$merge_date = [];
+			foreach($unavalibaleDate as $date){
+				$merge_date[] = '"'.$date['start'].'"'.',';
+			}	
+			
+            $unavalibaleDates1 = implode("",$merge_date);
+			$data->unavalibaleDates = rtrim($unavalibaleDates1, ',');
+            //print_r($data->userlang); die;
+			
+			
+			$data->userlang = $this->vendor_model->joindataResult('v.language_id','l.id',$udata1,'l.*,v.*','vendor_lang as v','language as l',$orderby=Null);
+         // print_r($data->userlang); die;
+			$data->usercity = $this->vendor_model->joindataResult('v.city_id','l.id',$udata1,'l.*,v.*','vendor_city as v','city as l',$orderby=Null);
+            $data->alllanguage=$this->vendor_model->SelectRecord1('language','*',array('status'=> '1'));
+			$data->allcity=$this->vendor_model->SelectRecord1('city','*',array('status'=> '1'));
+			$data->allOccuption=$this->vendor_model->SelectRecord1('occupation','*',array('status'=> '1'));
+		    
+			
+			
+			
+			
+			$data->userOccup = $this->vendor_model->joindataResult('v.occupation_id','l.id',$udata1,'l.*,v.*','vendor_occup as v','occupation as l',$orderby=Null);
+			
+			//print_r($data->userOccuids); die;
+		   $data->notifylist = $this->vendor_model->joindataResult('v.vendor_id','u.id',array("v.vendor_id"=>$this->session->userdata('user_id'),'v.status'=>0),'u.*,v.*','notification as v','user as u',$orderby=Null);
+           //echo $this->db->last_query(); die;
+           //$data->userDatas=$this->vendor_model->SelectRecord('notification','*',$where,$orderby=array());
+           //$result = $this->vendor_model->UpdateRecord('notification',array('status' => 1),$where);
+           //$result = $this->vendor_model->notificationStatus();
+		   $data->allvenRating = $this->vendor_model->joindataResultAll('v.vendor_id','l.id',array('l.id'=> $this->session->userdata('user_id')),'l.*,v.*,AVG(v.rate) as avgRate','rating as v','user as l','v.vendor_id');
+       //print_r($data->allvenRating); die;   
+		
+            $where=array('vendor_id'=> $this->session->userdata('user_id'),'notification_type'=>'user_rating');
+            $this->vendor_model->UpdateRecord('notification',array('status' => 1),$where);    
+		    $this->load->view('header',$data);  
+            $this->load->view('view_calendar',$data);
+            $this->load->view('footer',$data);  
+        }
+		
+			else{
+				 redirect('user');
+			} 
+		}
+		
+		 public function calendar_views()
+        {   
+		    $data=new stdClass();
+		    $occu_id = $this->uri->segment(4);
+			
+			$this->session->set_userdata('occu_id',$occu_id);
+			
+		    $vendor_id = $this->session->userdata('user_id');
+			
+			//print_r($userAvalibty['date']); die;
+			
+            $this->load->view('header');  
+            $this->load->view('view_allcalendar',$data);
+            $this->load->view('footer');  
+        }
+		
+		 public function get_events()
+		 {
+			 
+			  $occu_id = $this->session->userdata('occu_id');
+			   $year = date("Y");
+			  $start = $year.'-01-01 00:00:00';
+			   $end = $year.'-12-31 00:00:00'; 
+			  $vendor_id = $this->session->userdata('user_id');
+			 /*  $startdt = time() // setup a local datetime  
+			 $startdt->setTimestamp($start);  // Set the date based on timestamp
+			 echo $start_format = $startdt->format('Y-m-d H:i:s');   die;
+			 
+            $enddt = new DateTime('now'); // setup a local datetime
+			$enddt->setTimestamp($end); // Set the date based on timestamp
+			echo $end_format = $enddt->format('Y-m-d H:i:s'); */
+             
+			 $events= $this->vendor_model->get_events($start,$end,$occu_id,$vendor_id);
+            // $this->db->last_query(); 
+			 $eventsb= $this->vendor_model->get_eventsb($start,$end,$occu_id,$vendor_id);
+             
+			 $data_events = array();
+
+			 foreach($events->result() as $r) {
+
+				 $data_events[] = array(
+					 "id" => $r->id,
+					 "title" => $r->start_time."-".$r->end_time,
+					 "end" => $r->end,
+					 "start" => $r->start
+				 );
+			 }
+              foreach($eventsb->result() as $r) {
+
+				 $data_events[] = array(
+					 "id" => $r->id,
+					 "title" => $r->start_time."-".$r->end_time,
+					 "end" => $r->end,
+					 "start" => $r->start
+				 );
+				  
+			}
+			 echo json_encode(array("events" => $data_events));
+			 exit();
+		 }
+				
 		 public function history()
         {            
              if($this->session->userdata('logged_in')){
@@ -89,7 +205,7 @@ class Vendor extends MY_Controller
 			//$data->userHistory=$this->vendor_model->SelectRecord('booking','*',$udata1,$orderby=array());
 			$data->userDatas = $this->vendor_model->joindataResult('v.vendor_id','u.id',array("v.vendor_id"=>$this->session->userdata('user_id')),'u.*,v.*','booking as v','user as u',$orderby=Null);
             //echo $this->db->last_query(); die;            
-           $where=array('vendor_id'=> $this->session->userdata('user_id'));
+           $where=array('vendor_id'=> $this->session->userdata('user_id'),'notification_type'=>'user_booking');
            $this->vendor_model->UpdateRecord('notification',array('status' => 1),$where);
            
 			$this->load->view('header',$data);  
@@ -100,6 +216,9 @@ class Vendor extends MY_Controller
 				 redirect('user');
 			} 
         }
+		
+		
+		
         public function register(){
 			$data=new stdClass();
 			
@@ -151,7 +270,7 @@ class Vendor extends MY_Controller
 					$new_id1 = $this->vendor_model->InsertRecord('vendor_details',$udataDetails);
 					
 					
-					$lang_id1 = $this->input->post('lang');
+					/* $lang_id1 = $this->input->post('lang');
 		            $lang_id = implode(",",$lang_id1);
 					$lang_id2 = explode(",",$lang_id);
 					
@@ -161,7 +280,9 @@ class Vendor extends MY_Controller
 							'language_id'=>$lang_ids,
 						);
 						$new_id2 = $this->vendor_model->InsertRecord('vendor_lang',$udataLanguage);
-					 }
+					 } */
+					 
+					 
 					$city1 = $this->input->post('city');
 					$city = implode(",",$city1);
 					$city2 = explode(",",$city);
@@ -196,11 +317,19 @@ class Vendor extends MY_Controller
         }
         public function addDate(){
 			$data=new stdClass();
+			$tim = '00:00:00';
 			$udata=array(                                            
 					'vendor_id'=>$this->session->userdata('user_id'),
-					'date'=>$this->input->post('date'),
+					'start'=>$this->input->post('date').' '.$tim,
+					'end'=>$this->input->post('date').' '.$tim,
+					'start_time'=>$this->input->post('start_time'),
+					'end_time'=>$this->input->post('end_time'),
+					'occupation_id'=>$this->input->post('occupation_id'),
+					'status'=>0,
 				);
 					$new_id = $this->vendor_model->new_usera($udata);
+					
+					
 					$udata1 = array("vendor_id"=>$this->session->userdata('user_id'));			
 					$unavalibaleDate=$this->vendor_model->SelectRecord('user_avability','*',$udata1,$orderby=array());
 					$merge_date = [];
@@ -211,8 +340,8 @@ class Vendor extends MY_Controller
 					$unavalibaleDates1 = implode("",$merge_date);
 					$data->unavalibaleDate = rtrim($unavalibaleDates1, ',');
 			
-						//print_r($data->unavalibaleDates); 
-						$this->load->view('booking_cal',$data);   
+					//print_r($data->unavalibaleDates); 
+					$this->load->view('booking_cal',$data);   
 		    }
         
          public function editProfile(){
@@ -234,8 +363,8 @@ class Vendor extends MY_Controller
 			$udata1 = array("vendor_id"=>$this->session->userdata('user_id'));			
             
             if(!empty($_POST)){
-				 $where = array("vendor_id"=>$this->session->userdata('user_id'));			
-                    $this->vendor_model->delete_record('vendor_lang',$where);  //echo '<pre>';
+				 //$where = array("vendor_id"=>$this->session->userdata('user_id'));			
+                  //  $this->vendor_model->delete_record('vendor_lang',$where);  //echo '<pre>';
                    $where = array("vendor_id"=>$this->session->userdata('user_id'));			
                     $this->vendor_model->delete_record('vendor_city',$where);  //echo '<pre>';
 					
@@ -261,7 +390,7 @@ class Vendor extends MY_Controller
 					
 					
 			
-					$lang_id11 = $this->input->post('lang');
+					/* $lang_id11 = $this->input->post('lang');
 					//print_r($lang_id1); die;
 					
 		            $lang_ids = implode(",",$lang_id11);
@@ -274,7 +403,7 @@ class Vendor extends MY_Controller
 						);
 						$new2 = $this->vendor_model->InsertRecord('vendor_lang',$udataLanguage);
 						   
-					 }
+					 } */
 					 
 					
                    
@@ -399,7 +528,7 @@ class Vendor extends MY_Controller
                     $data->message='verified successfully, you can login now.';
                     $this->session->set_flashdata('item',$data);
                     //echo "<script>alert('verified successfully, you can login now.') </script>";
-                    redirect('vendor');
+                    redirect('user');
                 }else{
                     $data->error=1;
                     $data->success=0;
@@ -740,10 +869,39 @@ class Vendor extends MY_Controller
         public function notification(){
             $where=array('vendor_id'=> $this->session->userdata('user_id'),'status' => 0);
             $data =$this->vendor_model->SelectRecord('notification','*',$where,$orderby=array());
+			//print_r($data); die();
 			echo json_encode($data);
             die;
          }
-		
+		public function addmultioccup(){
+			//print_r($_POST); die;
+			$vendor_id = $this->session->userdata('user_id');
+			$data = array('occupation_id'=>$this->input->post('ocupation'),
+			    'experience'=>$this->input->post('exp'),
+				'specialization'=>$this->input->post('spez'));
+				
+			 	
+            foreach($data['occupation_id'] as $key => $da){
+				 $insert=array(    
+					'vendor_id'=>$vendor_id,			 
+					'occupation_id'=>$da,
+                    'experience'=>$data['experience'][$key],
+					'specialization'=>$data['specialization'][$key]					
+				);
+				$new_id = $this->vendor_model->insertocc($insert); 
+              				
+            }
+			if($new_id)
+                {
+                    echo 'User Added Successfully';
+                }
+                else{
+                    echo 'Fail To Add User';
+                }
+			//$new_id = $this->schedule_model->InsertBatch('user',$insert);
+			  
+			 
+        }
        
 
 }

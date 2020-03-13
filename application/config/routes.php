@@ -51,11 +51,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 
 // Welcome page  //
-$route['default_controller'] = 'Welcome';
-$route['about'] = 'Welcome/about';
-$route['contact'] = 'Welcome/contact';
-$route['faq'] = 'Welcome/faq';
-$route['privacy_policy'] = 'Welcome/privacy_policy';
+$route['default_controller'] = 'welcome';
+$route['about'] = 'welcome/about';
+$route['contact'] = 'welcome/contact';
+$route['faq'] = 'welcome/faq';
+$route['privacy_policy'] = 'welcome/privacy_policy';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 // Welcome page  //

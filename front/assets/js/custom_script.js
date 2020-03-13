@@ -114,7 +114,7 @@
 		$(".team_carousel").owlCarousel({
 			mode:"fade",
 			items:4,
-			loop:true,
+			loop:false,
 			margin:15,
 			autoplay:false,
 			autoplayTimeout:3000,
@@ -201,4 +201,11 @@
 			}
 		});
 	});
+	 //accordion js start
+	  $(".ac_heading").on("click", function(){
+		$(this).toggleClass("active");
+		$(this).next(".ac_content").slideToggle(100);
+		$(".ac_heading").not(this).next().slideUp(100);
+		$(".ac_heading").not(this).removeClass("active");
+	  });
 })(jQuery);

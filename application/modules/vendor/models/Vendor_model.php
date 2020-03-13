@@ -11,6 +11,15 @@ class Vendor_model extends MY_Model
  		
 		return $this->db->insert_id();		
     }
+	
+	function insertocc($data = array())
+    {
+        $this->db->insert('vendor_occup',$data);
+        return $this->db->insert_id();
+      // echo $this->db->last_query(); //to check query is right or not;
+		//die;
+     }
+	 
 	function new_usera ($data)
     {
         $this->db->insert('user_avability', $data);
@@ -20,13 +29,13 @@ class Vendor_model extends MY_Model
     
 	public function is_key_valid($key)
     {
-        $this->db->where('key', $key);
-        $query = $this->db->get('users');
+        $this->db->where('token', $key);
+        $query = $this->db->get('user');
         if( $query->num_rows() > 0 ){  } else { return False; }
         
         $this->db->set('is_verified', '1'); 
-        $this->db->where('key',$key); 
-        $this->db->update('users'); 
+        $this->db->where('token',$key); 
+        $this->db->update('user'); 
         return true;
     }
     
@@ -106,4 +115,32 @@ function unsetImage($id,$table,$data,$path) {
 		}
         return true;		
 	}
+	 function joindataResultAll($place1,$place2,$WhereData,$Selectdata,$TableName1,$TableName2,$group_by){
+		$this->db->select($Selectdata);
+		$this->db->from($TableName1);
+		$this->db->join($TableName2, $place1 .'='. $place2);
+		$this->db->group_by($group_by);
+		$this->db->where($WhereData);
+		$query = $this->db->get();
+		return $query->row_array();
+	}
+	
+	function get_events($start, $end, $occu_id, $vendor_id)
+	{
+		 $this->db->where("start >=", $start);
+		$this->db->where("end <=", $end);
+		$this->db->where("occupation_id", $occu_id);
+		$this->db->where("vendor_id", $vendor_id);
+		
+		return $this->db->get("user_avability");
+	}
+	 function get_eventsb($start, $end, $occu_id, $vendor_id)
+	{
+		 $this->db->where("start >=", $start);
+		$this->db->where("end <=", $end);
+		$this->db->where("occu_id", $occu_id);
+		$this->db->where("vendor_id", $vendor_id);
+		
+		return $this->db->get("booking");
+	} 
 }

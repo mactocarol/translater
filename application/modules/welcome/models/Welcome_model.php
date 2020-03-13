@@ -132,5 +132,24 @@ class Welcome_model extends MY_Model
 		
        	return $result;
 	}
-        
+	 function joindataResultAll($place1,$place2,$WhereData,$Selectdata,$TableName1,$TableName2,$group_by){
+		$this->db->select($Selectdata);
+		$this->db->from($TableName1);
+		$this->db->join($TableName2, $place1 .'='. $place2);
+		$this->db->group_by($group_by);
+		$this->db->where($WhereData);
+		$query = $this->db->get();
+		return $query->result_array();
+	}
+    function SelectRecord1($TableName,$Selectdata,$WhereData){
+		$this->db->select($Selectdata);
+		
+		if(!empty($WhereData)){
+			$this->db->where($WhereData);
+		}
+		$query = $this->db->get($TableName);
+		
+		return $query->result_array();
+	}    
+	
 }

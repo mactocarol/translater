@@ -269,6 +269,13 @@
 	.footer_menus ul li {
 	    width: 50%;
 	}
+	.occup_form_row .form_group {
+		width: 100%;
+	}
+	.occup_form_row .remove_btn {
+		top: auto;
+		bottom: 0;
+	}
 }
 
 @media(max-width: 767px){

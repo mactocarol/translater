@@ -1,4 +1,4 @@
-
+<?php //echo $u_id = $this->session->userdata('user_id'); ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -80,17 +80,33 @@
 						</a>
 					</div>
 					<!-- logo Mobile -->
+					
 					<div class="header_login_rgt">
 						<div class="header_login noti_count_dv">
-							
-							<?php if($this->session->userdata('user_id')!=""){ 
+						<?php if($this->session->userdata('user_id')!=""){ 
 								if($this->session->userdata('user_group_id')==2){?>
-								<a href="<?php echo base_url('vendor/history');?> "><span class="text"><i class="far fa-bell"></i></span></a>
-								<span class="noti_icon" id="notify">0</span>
-							<?php } 
-							}?>
-						
-							
+							<a href="#" class="dropdown_btn"><span class="text"><i class="far fa-bell"></i></span>
+								<span class="noti_icon" id="notify">0</span></a>
+						<?php } 
+							}?>	
+						<ul class="dropdown_menu">
+						<?php  $u_id = $this->session->userdata('user_id'); 
+						$nioty = get_notificationall($u_id);
+						//print_r($nioty);
+						foreach($nioty as $notieee){ 
+						//print_r($notieee);
+						if($notieee['notification_type']=="user_booking") {
+					?> 
+					
+						<li><a href="<?php echo base_url('vendor/history');?> "><?php print_r(get_user_name($notieee['user_id'])); ?> booked you for translation.</a></li>
+					
+					<?php } else if($notieee['notification_type']=="user_rating") { ?> 
+                     <li><a href="<?php echo base_url('vendor/dashboard');?> "><?php print_r(get_user_name($notieee['user_id'])); ?> has given rating.</a></li>
+					<?php } else {?> 
+                     <li><a href="#">No Notifications</a></li>
+					<?php  } } ?>
+											
+						</ul>
 						</div>
 						<div class="header_login">
 							<a href="#" class="dropdown_btn"><i class="far fa-user"></i></a>

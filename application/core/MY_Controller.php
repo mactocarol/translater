@@ -57,7 +57,7 @@ class MY_Controller extends MX_Controller
         //$body = $this->load->view('Common', $msg, TRUE);
         $this->load->library('email', $config);
         $this->email->set_newline("\r\n");
-        $this->email->from('info@mactosys.com', 'Khidmat');
+        $this->email->from('info@mactosys.com', 'Translator');
         $this->email->to($to);
         $this->email->subject($subject);
         $this->email->message($msg);

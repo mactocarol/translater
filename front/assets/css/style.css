@@ -1688,8 +1688,9 @@ input:focus, select:focus, a:focus, button:focus, textarea:focus{
 .trans_caption_rgt .site_button {
     height: 40px;
     line-height: 38px;
-    font-size: 14px;
-    padding: 0 20px;
+    font-size: 13px;
+    padding: 0 12px;
+	min-width:100px;
 }
 .rating_wraps .rating_dv {
     width: auto;
@@ -2686,7 +2687,7 @@ input:focus, select:focus, a:focus, button:focus, textarea:focus{
 #loading
 {
  text-align:center; 
- background: url('http://localhost/translater/front/assets/images/tenor.gif') no-repeat center; 
+ background: url('https://democarol.com/translater/front/assets/images/tenor.gif') no-repeat center; 
  height: 250px;
  width: 100%;
 }
@@ -2752,3 +2753,221 @@ input:focus, select:focus, a:focus, button:focus, textarea:focus{
     margin-top: 23px;
 }
 /*===== Booking fetch data ====*/
+.signup_page_wraper .help-block {
+    color: #fd1010;
+    font-size: 13px;
+    display: block;
+    width: 100%;
+}
+/*======= Calendar modal css ======*/
+.calendar_popup {
+    background: rgba(0, 0, 0, 0.8784313725490196);
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 111;
+	display:none;
+}
+.modal_dialog {
+    max-width: 400px;
+    margin: 25px auto;
+}
+.calendar_popup .modal-content {
+    position: relative;
+    padding: 20px;
+}
+.calendar_form .form_group input, 
+.calendar_form .form_group select, 
+.calendar_form .form_group textarea {
+    height: 40px;
+    border: 1px solid #ccc;
+}
+.calendar_form .form_group textarea {
+    height: 100px;
+}
+.calendar_form .input_group {
+    margin-bottom: 15px;
+}
+.calendar_popup .showdate {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    padding: 8px 0;
+}
+.calendar_popup .close_modal {
+    position: absolute;
+    right: 4px;
+    top: 2px;
+    font-size: 24px;
+    background: #1218ff;
+    color: #fff;
+    width: 25px;
+    height: 25px;
+    line-height: 23px;
+    text-align: center;
+    border-radius: 3px;
+	cursor:pointer;
+}
+/*======= Calendar modal css ======*/
+/*======= Occcupation css start ======*/
+.occup_form_row {
+    display: inline-block;
+    width: 100%;
+    position: relative;
+    border: 1px solid #ccc;
+    padding: 10px 5px 0;
+    margin-bottom: 10px;
+}
+.remove_btn {
+   display:inline-block;
+    padding: 0;
+    font-size: 14px;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    border: none;
+    background: #ff4f4f;
+    color: #fff;
+}
+.occup_form_row .remove_btn {
+    position: absolute;
+    right: 0;
+    top: 42px;
+}
+.add_more_form .occup_form_row {
+    padding-right: 17px;
+}
+.occup_form_row .form_group {
+    float: left;
+    width: 33.33%;
+    padding: 0 5px;
+    margin-bottom: 10px;
+}
+.occup_form_row .form_group label {
+    color: #000;
+    text-transform: capitalize;
+}
+.occupation_form .form_group input, 
+.occupation_form .form_group select, 
+.occupation_form .form_group textarea {
+    width: 100%;
+    height: 35px;
+    font-size: 14px;
+    border: 1px solid #cccccc;
+    background: #ffffff;
+    border-radius: 0;
+    padding: 0 10px;
+    color: #555;
+	border-radius:4px;
+}
+.occupation_form .select_box .bootstrap-select > .dropdown-toggle {
+    background-color: transparent;
+	border:1px solid #ccc;
+    height: 35px;
+	padding-top:0;
+	padding-bottom:0;
+}
+.add_more_form {
+    display: inline-block;
+    width: 100%;
+}
+/*======= Occcupation css End ======*/
+
+/*======= calenar tab css start ======*/
+.calendar_tabs_dv {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    padding-top: 30px;
+}
+.calendar_tabs_dv .tabs_link {
+    display: inline-block;
+    text-align: center;
+    background-color: #1218ff;
+    border: 1px solid transparent;
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 14px;
+    text-transform: capitalize;
+    height: 40px;
+    line-height: 38px;
+    padding: 0 19px;
+    border-radius: 4px;
+	margin: 4px 2px;
+}
+.calendar_tabs_dv .tabs_link:hover{
+    background-color: transparent;
+    border-color: #1218ff;
+    color: #1218ff;
+}
+/*======= calenar tab css End ======*/
+/*======= occupation accordion css start ======*/
+.occupation_row {
+    display: inline-block;
+    width: 100%;
+}
+.occupation_row h4 {
+    font-size: 21px;
+    font-weight: 600;
+    text-transform: capitalize;
+    margin-top: 0;
+    margin-bottom: 13px;
+}
+.ac_panel {
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 4px;
+}
+.ac_heading {
+    display: inline-block;
+    width: 100%;
+    background: #1218ff;
+    color: #fff;
+    padding: 10px 24px 10px 10px;
+    cursor: pointer;
+    position: relative;
+}
+.ac_heading .ac_icons {
+    position: absolute;
+    right: 8px;
+    top: 10px;
+}
+.ac_heading.active .ac_icons i:before {
+   content: "\f068";
+}
+.ac_heading h5 {
+    margin: 0;
+    font-size: 17px;
+    color: #fff;
+}
+.ac_content {
+    float: left;
+    width: 100%;
+	display:none;
+}
+.ac_content .panel_body {
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+}
+.ac_content h5 {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.user_cal .fc-day-top.fc-today:after, .user_cal .fc-day-top.fc-future:after {
+    position: absolute;
+    content: "Book";
+    bottom: 0;
+    top: 0;
+    background: #1218ff;
+    color: #fff;
+    padding: 0px 11px;
+    height: 27px;
+    line-height: 27px;
+    cursor: pointer;
+    font-size: 12px;
+}
+/*======= occupation accordion css End ======*/

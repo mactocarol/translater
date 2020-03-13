@@ -1,10 +1,4 @@
-<?php if(!empty($unavalibaleDates)){
-		$dates = $unavalibaleDates;
-	}
-	else{
-		$dates = date("Y/m/d");
-	}
-?>
+
 <!-- page banner start -->
 	<div class="page_banner_section">
 		<div class="container">
@@ -12,7 +6,7 @@
 				<h2>Search Translator</h2>
 				<div class="breadcrumbs">
 					<ul>
-						<li><a href="#">Home</a></li>
+						<li><a href="<?php echo base_url();?>">Home</a></li>
 						<li>Translator</li>
 					</ul>
 				</div>
@@ -51,7 +45,7 @@
 												<i class="fas fa-star"></i>
 												<i class="fas fa-star disable_str"></i>
 											</div>
-											<span class="review_txt">(30 views)</span>
+											<span class="review_txt">(<?php if(isset($detailvendor->view_count)) {echo $detailvendor->view_count; } ?>  views)</span>
 										</div>
 									</div>
 									<?php if($this->session->userdata('user_group_id')!=2){ ?>
@@ -65,7 +59,7 @@
 								  <table class="table prof_detail_lst">
 									<tr>
 										<td class="frst_spn">Gender</td>
-								<td class="scnd_spn"><?php if(isset($detailvendor->gender)) {echo $detailvendor->gender; } ?></td>
+										<td class="scnd_spn"><?php if(isset($detailvendor->gender)) {echo $detailvendor->gender; } ?></td>
 									</tr>
 									<tr>
 										<td class="frst_spn">Number</td>
@@ -75,12 +69,12 @@
 										<td class="frst_spn">Email</td>
 										<td class="scnd_spn"><?php if(isset($detailvendor->email)) {echo $detailvendor->email; } ?></td>
 									</tr>
-									<tr>
+									<!--<tr>
 										<td class="frst_spn">Language</td>
-										<td class="scnd_spn"><?php   if(!empty($userlang)){ $lg =array();  
-										foreach($userlang as $vallang) {  $lg[] = $vallang['title']; 
-										 } echo  $lg = implode(", ",$lg); }?></td>
-									</tr>
+										<td class="scnd_spn"><?php   //if(!empty($userlang)){ $lg =array();  
+										//foreach($userlang as $vallang) //{  $lg[] = $vallang['title']; 
+										// }echo  $lg = implode(", ",$lg); }?></td>
+									</tr>-->
 									<tr>
 										<td class="frst_spn">City</td>
 										<td class="scnd_spn"><?php   if(!empty($usercity)){  $ct =array(); 
@@ -95,19 +89,49 @@
 										<td class="frst_spn">Other Profile</td>
 										<td class="scnd_spn">
 										   <div class="social_icons">
-											  <a href="<?php if(isset($detailvendor->facebook_url)) {echo $detailvendor->	facebook_url; } ?>" target="_blanck"><i class="fab fa-facebook-f"></i></a>
-											  <a href="<?php if(isset($detailvendor->twiter_url)) {echo $detailvendor->		twiter_url; } ?>" target="_blanck"><i class="fab fa-twitter"></i></a>
-											  <a href="<?php if(isset($detailvendor->google_url)) {echo $detailvendor->		google_url; } ?>" target="_blanck"><i class="fab fa-google-plus-g"></i></a>
-											  <a href="<?php if(isset($detailvendor->insta_url)) {echo $detailvendor->		insta_url; } ?>" target="_blanck"><i class="fab fa-instagram"></i></a>
+											  <a href="<?php if(isset($detailvendor->facebook_url)) {echo $detailvendor->facebook_url; } ?>" target="_blanck"><i class="fab fa-facebook-f"></i></a>
+											  <a href="<?php if(isset($detailvendor->twiter_url)) {echo $detailvendor->twiter_url; } ?>" target="_blanck"><i class="fab fa-twitter"></i></a>
+											  <a href="<?php if(isset($detailvendor->google_url)) {echo $detailvendor->google_url; } ?>" target="_blanck"><i class="fab fa-google-plus-g"></i></a>
+											  <a href="<?php if(isset($detailvendor->insta_url)) {echo $detailvendor->insta_url; } ?>" target="_blanck"><i class="fab fa-instagram"></i></a>
 									 		</div>
 									 	</td>
 									</tr>
 								  </table>
 								</div>
+								<!--occupation row --->
+								<div class="occupation_row">
+									<h4>Occupation</h4>
+									
+									<?php if(!empty($userOccup)){ $lg =array();  
+										foreach($userOccup as $vallang) {   
+										?>
+									<!-- panel start -->
+									<div class="ac_panel">
+										<div class="ac_heading">
+											<h5><?php  echo $vallang['title'];; ?></h5>
+											<span class="ac_icons"><i class="fas fa-plus"></i></span>
+										</div>
+										<div class="ac_content">
+											<div class="panel_body">
+												<h5>Experience</h5>
+												<p><?php  echo $vallang['experience']; ?> Year</p>
+												<h5>Specialization</h5>
+												<p><?php  echo $vallang['specialization']; ?></p>
+												<h5>Booking Calendar</h5>
+												<p><div class="calendar_tabs_dv"><a class="tabs_link" href="<?php echo site_url();?>search/calendar_views/<?php echo $this->uri->segment(3); ?>/<?php echo $vallang['title'];  ?>/<?php echo $vallang['id'];  ?>"><?php echo $vallang['title']."   Calendar           ".'</br>';?></div></a>
+											    </p>
+											</div>
+										</div>
+									</div>
+									<?php } }?>
+									<!-- panel start -->
+									
+								</div>
+								<!--occupation row --->
 								<div class="profile_dtl_tabs">
 									<ul class="tab_menu">
 										<li class="tab_link active" data-tab="personal_tab">
-											personal details
+											Personal details
 										</li>
 										<li class="tab_link" data-tab="business_tab">
 											Business details
@@ -119,7 +143,7 @@
 									<div class="tab_content_wrap">
 										<div class="tab_content active" id="personal_tab">
 											<div class="tab_content_inner">
-												<h5>personal details</h5>
+												<h5>Personal details</h5>
 												<p><?php if(isset($detailvendor->personal_info)) {echo $detailvendor->	personal_info; } ?></p>
 											</div>
 										</div>
@@ -146,7 +170,7 @@
 	</div>
 	<!-- Details section start -->
 	
-	<!-- Booking calendar start -->
+	<!-- Booking calendar start 
 	<div class="section booking_cal_section">
 		<div class="container">
 			<div class="booking_head_dv">
@@ -162,11 +186,11 @@
 						<form method="post" action="<?php echo base_url('booking'); ?>">
 						
 							<div class="form_group">
-								<input type="text" name="booking_date" class="datepicker input_white" placeholder="Select Date">
+								<input type="text" name="booking_date" class="datepicker input_white" placeholder="Select Date" required>
 							</div>
 							
 							<div class="form_group">
-								<input type="text" name="booking_time" class="time_picker input_white" placeholder="Select Time">
+								<input type="text" name="booking_time" class="time_picker input_white" placeholder="Select Time" required>
 							</div>
 							
 							<input type="hidden" name="vendor_id" value="<?php echo $this->uri->segment(3);  ?>">
@@ -175,7 +199,6 @@
 							
 							<div class="form_group">
 								<select name="booking_hour">
-									<option value="">Select Hour</option>
 									<option value="1">1 Hour</option>
 									<option value="2">2 Hour</option>
 									<option value="3">3 Hour</option>
@@ -189,8 +212,7 @@
 							
 							<div class="form_group">
 								<select name="booking_lang">
-									<option value="">Select Language</option>
-									<?php foreach($userlang as $vallang) { ?>
+									<?php foreach($userOccup as $vallang) { ?>
 									<option value="<?php echo $vallang['title']; ?>"><?php echo $vallang['title']; ?></option>
 									<?php }  ?>									
 								</select>
@@ -198,7 +220,6 @@
 							
 							<div class="form_group">
 								<select name="booking_city">
-									<option value="">Select City</option>
 									<?php foreach($usercity as $valcity) { ?>
 									<option value="<?php echo $valcity['title']; ?>"><?php echo $valcity['title']; ?></option>
 									<?php }  ?>									
@@ -216,53 +237,96 @@
 					</div>
 				</div>
 				<?php } ?>
-				<div class="booking_calendar_dv">
-					<div class="booking_calendar">
-						<div class="calendar_input"></div>
-					</div>
-				</div>
+				
 			</div>
 		</div>
 	</div>
-	<!-- Booking calendar End -->
-	
-	<!-- Review section start -->
+	 Booking calendar End -->
+<!-- Review section start -->
 	<div class="section review_rating_sec pad_top_bottom_40">
 		<div class="container">
 			<h5 class="review_title">Review</h5>
 			<ul class="review_list">
 				<!-- review list start -->
+				<?php if(!empty($userRating)) {
+				foreach ($userRating as $key => $value) { ?>
 				<li>
 					<div class="review_user_list">
 						<div class="r_thumb">
-							<img src="<?php echo base_url('front');?>/assets/images/team/team1.jpg" alt="">
+						<?php if(get_user_image($value['user_id'])) {?>
+							<img src="<?php echo base_url('upload');?>/user/<?php print_r(get_user_image($value['user_id'])); ?>" alt="">
+						<?php } else{?>
+							<img src="<?php echo base_url('front');?>/assets/images/translator/thumbs.jpg" alt="">
+						<?php } ?>		
 						</div>
 						<div class="r_caption">
 							<div class="headng">
-								<h5>Norma M. Morgan</h5>
+								<h5><?php print_r(get_user_name($value['user_id'])); ?></h5>
 							</div>
+							<?php if($value['rate'] == 1){ ?>
 							<div class="rating_dv">
+							    <i class="fas fa-star"></i>
+								<i class="fas fa-star disable_str"></i>
+								<i class="fas fa-star disable_str"></i>
+								<i class="fas fa-star disable_str"></i>
+								<i class="fas fa-star disable_str"></i>
+							</div>
+							<?php }else if($value['rate'] == 2){ ?>
+							<div class="rating_dv">
+							    <i class="fas fa-star"></i>
 								<i class="fas fa-star"></i>
+								<i class="fas fa-star disable_str"></i>
+								<i class="fas fa-star disable_str"></i>
+								<i class="fas fa-star disable_str"></i>
+							</div>
+							
+							<?php } else if($value['rate'] == 3){ ?>
+							<div class="rating_dv">
+							    <i class="fas fa-star"></i>
+								<i class="fas fa-star"></i>
+								<i class="fas fa-star"></i>
+								<i class="fas fa-star disable_str"></i>
+								<i class="fas fa-star disable_str"></i>
+							</div>
+						
+							<?php } else if($value['rate'] == 4){ ?>
+							<div class="rating_dv">
+							    <i class="fas fa-star"></i>
 								<i class="fas fa-star"></i>
 								<i class="fas fa-star"></i>
 								<i class="fas fa-star"></i>
 								<i class="fas fa-star disable_str"></i>
 							</div>
-							<p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock,</p>
+							
+							<?php } else if($value['rate'] == 5){ ?>
+							<div class="rating_dv">
+							    <i class="fas fa-star"></i>
+								<i class="fas fa-star"></i>
+								<i class="fas fa-star"></i>
+								<i class="fas fa-star"></i>
+								<i class="fas fa-star"></i>
+							</div>
+							<?php } ?>
+							<p><?php echo $value['review']; ?></p>
 						</div>
 					</div>
 				</li>
+				<?php } }
+				else{?>
+					<span>No Reviews</span>
+				<?php }?>
 				<!-- review list end -->
 				
 			</ul>
 		</div>
 	</div>
 	<!-- Review section End -->
+	
 <script src="<?php echo base_url('front');?>/assets/js/plugins/jquery_ui/jquery-ui.min.js"></script>
 
 <script>
 
-var holidays= [<?php echo $dates; ?>];
+var holidays= ["2020/08/09"];
 
  $('.calendar_input').datepicker({
 	dateFormat: "yy/mm/dd",

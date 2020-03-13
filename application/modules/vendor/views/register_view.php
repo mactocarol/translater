@@ -99,34 +99,32 @@
 								</div>
 								<div class="col-md-12 col-12">
 								<div class="form_group">
-									<label>Price *</label>
+									<label>Price Per Hour*</label>
 									<div class="input_group">
 										<input type="text" name="price" id="price" placeholder="Price Per Hour" oninput="this.value=this.value.replace(/[^0-9]/g,'');" >
 									</div>
 								</div>
 								</div>
-								<div class="col-md-6 col-12">
+								<!--<div class="col-md-6 col-12">
 									<div class="form_group">
 										<label>Language *</label>
 										<div class="input_group select_box">
 											<select class="selectpicker" multiple="" name="lang[]" id="lang">
-											<option value="" disabled>Select Language</option>
 											 <?php 
-												 if(!empty($alllanguage)){
-													 foreach ($alllanguage as $key => $value) {
+												 //if(!empty($alllanguage)){
+													// foreach ($alllanguage as $key => $value) {
 												?>
-											  <option value="<?php echo $value['id']; ?>"><?php echo $value['title']; ?></option>
-											  <?php } } ?>
+											  <option value="<?php //echo $value['id']; ?>"><?php //echo $value['title']; ?></option>
+											  <?php //} } ?>
 											</select>
 										</div>
 									</div>
-								</div>
+								</div>-->
 								<div class="col-md-6 col-12">
 									<div class="form_group">
 										<label>City *</label>
 										<div class="input_group select_box">
 											<select class="selectpicker" multiple="" name="city[]" id="city">
-												<option value="" disabled>Select City</option>
 												 <?php 
 												 if(!empty($allcity)){
 													 foreach ($allcity as $key => $value) {

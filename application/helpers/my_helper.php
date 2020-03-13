@@ -17,8 +17,8 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
             $mail->SMTPAuth = true;
             $mail->SMTPSecure = "ssl";
             $mail->Port = 465;
-            $mail->From = "info@khidmat.com";
-            $mail->FromName = "Khidmat";
+            $mail->From = "info@translator.com";
+            $mail->FromName = "Translator";
             $mail->SMTPAuth = false;
             $mail->Username = 'dating@mactosys.com';
             $mail->Password = 'dating!@#';
@@ -140,15 +140,60 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
 	
 	function get_user_name($userid){
         
-            $CI =& get_instance();
-            $CI->db->select('*');
-            $CI->db->where(array('id'=>$userid));
-            $query = $CI->db->get('tbl_user');            
-            $reslt = $query->row();
-          return  $reslt->first_name." ". $reslt->last_name;
+		$CI =& get_instance();
+		$CI->db->select('*');
+		$CI->db->where(array('id'=>$userid));
+		$query = $CI->db->get('tbl_user');            
+		$reslt = $query->row();
+	  return  $reslt->first_name." ". $reslt->last_name;
            // return $reslt;
     }
+	function get_user_image($userid){
         
-       
+		$CI =& get_instance();
+		$CI->db->select('*');
+		$CI->db->where(array('id'=>$userid));
+		$query = $CI->db->get('tbl_user');            
+		$reslt = $query->row();
+	  return  $reslt->image;
+           // return $reslt;
+    }
+	function get_notification($u_id)
+	{
+	 //echo  $u_id; 
+		 $CI =& get_instance();
+            $CI->db->select('tbl_notification.*,tbl_user.*');           
+            $CI->db->join('tbl_user','tbl_notification.vendor_id = tbl_user.id','left');
+            $CI->db->where('tbl_notification.vendor_id',$u_id);
+            $query = $CI->db->get('tbl_notification');            
+            $reslt = $query->row();			
+            return $reslt;      	
+		
+	}
+	function get_notificationall($u_id)
+	{
+	 //echo  $u_id; 
+		 $CI =& get_instance();
+            $CI->db->select('tbl_notification.*,tbl_user.*');           
+            $CI->db->join('tbl_user','tbl_notification.vendor_id = tbl_user.id','left');
+            $CI->db->where('tbl_notification.vendor_id',$u_id);
+            $query = $CI->db->get('tbl_notification');            
+            $reslt = $query->result_array();			
+            return $reslt;      	
+		
+	}
+	/* function get_rating($v_id)
+	{
+	 //echo  $u_id; 
+		 $CI =& get_instance();
+            $CI->db->select('tbl_rating.*,tbl_user.*');           
+            $CI->db->join('tbl_user','tbl_rating.vendor_id = tbl_user.id','left');
+            $CI->db->where('tbl_rating.vendor_id',$v_id);
+            $query = $CI->db->get('tbl_rating');            
+            $reslt = $query->row();			
+            return  $reslt->rate;   	
+		
+	} */
+     
         
 ?>
